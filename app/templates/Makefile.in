@@ -1,0 +1,55 @@
+PROJECT = {{name}}
+VERSION = 0.1
+
+DESTDIR ?=
+
+define localdep =
+$(shell erl -noshell -eval "case application:ensure_all_started($1) of {ok, _} -> halt(0); _ -> halt(1) end." && echo ok || true)
+endef
+
+ALL_DEPS = cowboy jsx
+$(foreach dep,$(ALL_DEPS),$(if $(call localdep,$(dep)),$(eval LOCAL_DEPS+=$(dep)),$(eval DEPS+=$(dep))))
+
+dep_cowboy_commit = 2.0.0-pre.1
+
+VSN = $(shell $(CURDIR)/version.sh $(VERSION))
+ARCHIVE = $(PROJECT)-$(VSN).tar.xz
+
+prefix ?= /usr/local
+bindir ?= $(prefix)/bin
+
+subst = sed -e 's|@VSN[@]|$(VSN)|g'
+
+include erlang.mk
+
+ebin/$(PROJECT).app:: src/$(PROJECT).app.src
+
+src/$(PROJECT).app.src: src/$(PROJECT).app.src.in
+	$(gen_verbose) $(subst) $< > $@
+
+dist: $(PROJECT)-$(VSN).tar.xz
+
+$(PROJECT)_$(VSN).orig.tar.xz: $(PROJECT)-$(VSN).tar.xz
+	ln -s $< $@
+
+$(PROJECT)-$(VSN).tar.xz:
+	-rm -f src/$(PROJECT).app.src
+	@$(MAKE) --no-print-directory src/$(PROJECT).app.src
+	$(gen_verbose) git archive --prefix=$(PROJECT)-$(VSN)/ HEAD . | \
+	  tar xf - && \
+	  cp src/$(PROJECT).app.src $(PROJECT)-$(VSN)/src && \
+	  tar cf - $(PROJECT)-$(VSN) | xz > $@ && \
+	  rm -rf $(PROJECT)-$(VSN)
+
+clean:: clean-deps
+
+clean-deps:
+	@for dep in $(wildcard deps/*) ; do \
+		if [ -f $$dep/GNUmakefile ] || [ -f $$dep/makefile ] || [ -f $$dep/Makefile ] ; then \
+			$(MAKE) -C $$dep clean ; \
+		else \
+			echo "include $(CURDIR)/erlang.mk" | ERLC_OPTS=+debug_info $(MAKE) -f - -C $$dep clean ; \
+		fi ; \
+	done
+
+.PHONY: clean-deps
