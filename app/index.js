@@ -9,6 +9,12 @@ var Saloon = generators.Base.extend({
 	this.fs.write(this.destinationPath(dest), mustache.render(tmpl, ctx));
     },
 
+    render2: function (name, ctx) {
+	var dest = mustache.render(name, ctx);
+	this.log("RENDER " + name + '.in -> ' + dest);
+	this.render(name + '.in', dest, ctx);
+    },
+
     copy: function (orig, dest) {
 	if (typeof dest === "undefined") {
 	    dest = orig;
@@ -18,20 +24,35 @@ var Saloon = generators.Base.extend({
 });
 
 module.exports = Saloon.extend({
+
+    constructor: function() {
+	generators.Base.apply(this, arguments);
+
+	//this.composeWith('angular', {
+	//    options: { appPath: this.destinationPath('priv/www') }
+	//}, {});
+    },
+
     initializing: function () {
-	//this.composeWith(
-	//    'angular',
-	//    { options: { appPath: this.destinationPath('priv/www') } },
-	//    {});
+	true;
     },
 
     writing: function () {
 	var ctx = {
-	    name: this.appname
+	    name: this.appname,
+	    description: this.description,
+	    curlyOpen: '{{',
+	    curlyEnd: '}}'
 	};
-	this.render('README.md.in', 'README.md', ctx);
-	this.render('Makefile.in', 'Makefile', ctx);
-	this.render('start.sh.in', 'start.sh', ctx);
+
+	var files = ['README.md', 'Makefile', 'start.sh',
+		     'include/{{name}}_log.hrl',
+		     'src/{{name}}_app.erl', 'src/{{name}}.app.src', 'src/{{name}}.erl',
+		     'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl'];
+	var i = 0;
+	for (i = 0; i < files.length; i++) {
+	    this.render2(files[i], ctx);
+	}
 	
 	this.copy('version.sh');
     },
@@ -39,4 +60,5 @@ module.exports = Saloon.extend({
     install: function () {
 	this.installDependencies();
     }
+
 });

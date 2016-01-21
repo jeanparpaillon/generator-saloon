@@ -1,0 +1,23 @@
+%% @doc Serve index.html file
+%%
+-module({{name}}_index).
+-behaviour(cowboy_middleware).
+
+-export([execute/2]).
+
+%% @private
+execute(Req, Env) ->
+    case cowboy_req:method(Req) of
+	<<"GET">> -> check_url(Req, Env);
+	<<"HEAD">> -> check_url(Req, Env);
+	<<"OPTIONS">> -> check_url(Req, Env);
+	_M -> {ok, Req, Env}
+    end.
+
+check_url(Req, Env) ->
+    case cowboy_req:path(Req) of
+	<<"/">> ->
+	    {ok, cowboy_req:set([{path, <<"/index.html">>}], Req), Env};
+	_ ->
+	    {ok, Req, Env}
+    end.

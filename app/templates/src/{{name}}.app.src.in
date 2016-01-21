@@ -1,0 +1,16 @@
+{application, {{name}},
+ [
+  {description, "{{description}}"},
+  {vsn, "@VSN@"},
+  {modules, []},
+  {applications, [
+                  kernel,
+		  inets,
+                  stdlib,
+		  cowboy
+                 ]},
+  {mod, { {{name}}_app, []}},
+  {env, [
+	 {port, 8080}
+	]}
+ ]}.

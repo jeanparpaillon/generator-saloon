@@ -1,0 +1,18 @@
+-module({{name}}).
+
+-include("{{name}}_log.hrl").
+
+%% API
+-export([start/0]).
+
+%%% API
+start() ->
+    application:load({{name}}),
+    case application:ensure_all_started({{name}}) of
+	{ok, _} ->
+	    ?info("{{name}} backend started on port: ~b", [application:get_env({{name}}, port, 0)]),
+	    ok;
+	{error, _Err} ->
+	    ?error("{{name}} backend failed to start: ~p", [_Err]),
+	    erlang:halt(1)
+    end.

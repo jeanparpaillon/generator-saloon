@@ -1,0 +1,48 @@
+-module({{name}}_sup).
+
+-behaviour(supervisor).
+
+%% API
+-export([start_link/0]).
+
+%% Supervisor callbacks
+-export([init/1]).
+
+-define(SRV, ?MODULE).
+%% Helper macro for declaring children of supervisor
+-define(CHILD(I, Type), {I, {I, start_link, []}, permanent, 5000, Type, [I]}).
+
+%% ===================================================================
+%% API functions
+%% ===================================================================
+
+start_link() ->
+    supervisor:start_link({local, ?SRV}, ?MODULE, []).
+
+%% ===================================================================
+%% Supervisor callbacks
+%% ===================================================================
+
+init([]) ->
+    Children = [http_config()],
+    {ok, { {one_for_one, 5, 10}, Children} }.
+
+%%%
+%%% Priv
+%%%
+-define(LOGO_PATH, application:get_env({{name}}, logo, filename:join(code:priv_dir({{name}}), "logo.png"))).
+
+http_config() ->
+    Dir = filename:join(code:priv_dir({{name}}), "www"),
+    Handlers = [
+		{"/api",        {{name}}_api, undefined},
+		{"/logo",       cowboy_static, {file, ?LOGO_PATH, [{mimetypes, cow_mimetypes, all}]}},
+		{"/[...]",      cowboy_static, {dir, Dir, [{mimetypes, cow_mimetypes, all}]}}
+	       ],
+    Args = [http, 5,
+	    [{port, application:get_env({{name}}, port, undefined)}],
+	    [{env, [{dispatch, cowboy_router:compile([{'_', Handlers}])}]},
+	     {middlewares, [{{name}}_index, cowboy_router, cowboy_handler]}]
+	   ],
+    {http, {cowboy, start_http, Args}, permanent, 5000, worker, 
+     [{{name}}_api, cowboy]}.
