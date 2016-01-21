@@ -1,0 +1,25 @@
+{
+    "name": "generator-saloon",
+    "version": "0.1.0",
+    "description": "Yeoman generator for erlang/cowboy based webapp",
+    "keywords": [
+	"yeoman-generator",
+	"front-end",
+	"back-end",
+	"erlang",
+	"cowboy"
+    ],
+    "author": "Jean Parpaillon",
+    "main": "app/index.js",
+    "files": [
+	"app"
+    ],
+    "dependencies": {
+	"yeoman-generator": ">=0.18.0",
+	"generator-angular": "*"
+    },
+    "engines": {
+	"node": ">=0.10.0"
+    },
+    "license": "Apache 2"
+}
