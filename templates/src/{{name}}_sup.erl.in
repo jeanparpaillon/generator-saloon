@@ -30,19 +30,16 @@ init([]) ->
 %%%
 %%% Priv
 %%%
--define(LOGO_PATH, application:get_env({{name}}, logo, filename:join(code:priv_dir({{name}}), "logo.png"))).
-
 http_config() ->
     Dir = filename:join(code:priv_dir({{name}}), "www"),
     Handlers = [
-		{"/api",        {{name}}_api, undefined},
-		{"/logo",       cowboy_static, {file, ?LOGO_PATH, [{mimetypes, cow_mimetypes, all}]}},
-		{"/[...]",      cowboy_static, {dir, Dir, [{mimetypes, cow_mimetypes, all}]}}
-	       ],
-    Args = [http, 5,
-	    [{port, application:get_env({{name}}, port, undefined)}],
-	    [{env, [{dispatch, cowboy_router:compile([{'_', Handlers}])}]},
-	     {middlewares, [{{name}}_index, cowboy_router, cowboy_handler]}]
-	   ],
+				{"/api",        {{name}}_api, undefined},
+				{"/[...]",      cowboy_static, {dir, Dir, [{mimetypes, cow_mimetypes, all}]}}
+			   ],
+    Args = [http, 100,
+			[{port, application:get_env({{name}}, port, undefined)}],
+			[{env, [{dispatch, cowboy_router:compile([{'_', Handlers}])}]},
+			 {middlewares, [{{name}}_index, cowboy_router, cowboy_handler]}]
+		   ],
     {http, {cowboy, start_http, Args}, permanent, 5000, worker, 
      [{{name}}_api, cowboy]}.

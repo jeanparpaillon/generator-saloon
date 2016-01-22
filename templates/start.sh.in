@@ -31,7 +31,7 @@ done
 erl -sname agent \
     -pa ${ebindir} \
     -pa ${depsdir} \
-    -{{saloon.name}} port "$port" \
+    -{{name}} port "$port" \
     -s {{name}}
 
 exit 0

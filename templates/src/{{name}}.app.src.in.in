@@ -5,12 +5,12 @@
   {modules, []},
   {applications, [
                   kernel,
-		  inets,
+				  inets,
                   stdlib,
-		  cowboy
+				  cowboy
                  ]},
   {mod, { {{name}}_app, []}},
   {env, [
-	 {port, 8080}
-	]}
+		 {port, 8080}
+		]}
  ]}.
