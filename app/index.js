@@ -9,28 +9,23 @@ var Saloon = generators.Base.extend({
 		this.fs.write(this.destinationPath(dest), mustache.render(tmpl, ctx));
   },
 
-  render2: function (name, ctx) {
+	copy_or_render: function (name, ctx) {
 		var dest = mustache.render(name, ctx);
-		this.render(name + '.in', dest, ctx);
-  },
-
-  copy: function (orig, dest) {
-		if (typeof dest === "undefined") {
-	    dest = orig;
+		if (this.fs.exists(this.templatePath(name + '.in'))) {
+			this.render(name + '.in', dest, ctx);
+		} else {
+			this.fs.copy(this.templatePath(name), this.destinationPath(dest));
 		}
-		this.fs.copy(this.templatePath(orig), this.destinationPath(dest));
-  }
+	}
 });
 
 module.exports = Saloon.extend({
 
   constructor: function() {
 		generators.Base.apply(this, arguments);
-		
-		//this.composeWith('angular', {
-		//  options: { appPath: this.destinationPath('priv/www') }
-		//}, {});
-  },
+
+		//this.sourceRoot(this.path.join(__dirname, '../templates'));
+	},
 
   initializing: function () {
 		true;
@@ -40,21 +35,26 @@ module.exports = Saloon.extend({
 		var ctx = {
 	    name: this.appname,
 	    description: this.description,
+			versions: {
+				ng: "1.4.0",
+				boostrapsass: "3.2.0"
+			},
+			ngVer: "1.4.0",
 	    curlyOpen: '{{',
 	    curlyEnd: '}}'
 		};
 
-		var files = ['README.md', 'Makefile', 'start.sh',
+		var files = ['README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
 								 'include/{{name}}_log.hrl',
 								 'src/{{name}}_app.erl', 'src/{{name}}.app.src', 'src/{{name}}.erl',
-								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl'];
+								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl',
+								 'priv/www/bower.json', 'priv/www/index.html', 'priv/www/favicon.ico',
+								 'priv/www/robots.txt', 'priv/www/styles/main.scss', 'priv/www/images/yeoman.png',
+								 'priv/www/views/main.html', 'priv/www/views/view.html'];
 		var i = 0;
 		for (i = 0; i < files.length; i++) {
-	    this.render2(files[i], ctx);
+	    this.copy_or_render(files[i], ctx);
 		}
-
-		this.copy('version.sh');
-		this.copy('erlang.mk');
   },
 
 	install: function () {

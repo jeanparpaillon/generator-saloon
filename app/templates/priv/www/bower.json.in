@@ -1,0 +1,27 @@
+{
+  "name": "{{appname}}",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^{{versions.ng}}",
+    "bootstrap-sass-official": "^{{versions.bootstrapsass}}",
+    "angular-animate": "^{{versions.ng}}",
+    "angular-cookies": "^{{versions.ng}}",
+    "angular-resource": "^{{versions.ng}}",
+    "angular-route": "^{{versions.ng}}",
+    "angular-sanitize": "^{{versions.ng}}",
+    "angular-touch": "^{{versions.ng}}"
+  },
+  "devDependencies": {
+    "angular-mocks": "^{{versions.ng}}"
+  },
+  "moduleName": "{{name}}App"
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}
