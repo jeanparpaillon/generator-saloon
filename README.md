@@ -25,24 +25,20 @@ A saloon contains:
 # Quickstart
 
 1. Install npm (see [nvm](https://github.com/creationix/nvm) for easy Node.js + npm install)
-2. Install yeoman
+2. Install yeoman and this generator
 ```sh
-$ npm install -g yo
+$ npm install -g yo generator-saloon
 ```
-3. Install this generator locally:
-```sh
-$ npm link
-```
-4. Create a folder for your app
+3. Create a folder for your app
 ```sh
 $ mkdir $HOME/myapp
 ```
-5. Call yeoman to create your app:
+4. Call yeoman to create your app:
 ```sh
 $ cd $HOME/myapp && yo saloon
 ``
-6. You can now build your app and start it:
+5. You can now build your app and start it:
 ```sh
 $ make && ./start.sh
 ```
-7. You app is running and accessible on port 8080.
+6. You app is running and accessible on port 8080.
