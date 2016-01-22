@@ -22,6 +22,11 @@ subst = sed -e 's|@VSN[@]|$(VSN)|g'
 
 include erlang.mk
 
+app:: frontend
+
+frontend:
+
+
 ebin/$(PROJECT).app:: src/$(PROJECT).app.src
 
 src/$(PROJECT).app.src: src/$(PROJECT).app.src.in
@@ -52,4 +57,4 @@ clean-deps:
 		fi ; \
 	done
 
-.PHONY: clean-deps
+.PHONY: app clean-deps

@@ -1,9 +1,9 @@
 {
-  "name": "{{appname}}",
+  "name": "{{name}}",
   "version": "0.0.0",
   "dependencies": {
     "angular": "^{{versions.ng}}",
-    "bootstrap-sass-official": "^{{versions.bootstrapsass}}",
+    "bootstrap-sass-official": "^{{versions.boostrapsass}}",
     "angular-animate": "^{{versions.ng}}",
     "angular-cookies": "^{{versions.ng}}",
     "angular-resource": "^{{versions.ng}}",
@@ -14,7 +14,7 @@
   "devDependencies": {
     "angular-mocks": "^{{versions.ng}}"
   },
-  "moduleName": "{{name}}App"
+  "moduleName": "{{name}}App",
   "overrides": {
     "bootstrap": {
       "main": [

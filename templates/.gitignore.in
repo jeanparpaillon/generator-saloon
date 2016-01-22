@@ -1,0 +1,13 @@
+# Temp files
+*~
+
+# erlang built files
+*.beam
+*.app
+/.erlang.mk
+/*.d
+/deps
+/src/*.app.src
+
+$ Frontend
+/priv/www/bower_components

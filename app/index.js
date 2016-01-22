@@ -45,7 +45,8 @@ module.exports = Saloon.extend({
 	    curlyEnd: '}}'
 		};
 
-		var files = ['README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
+		var files = ['.yo-rc.json', '.gitignore',
+								 'README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
 								 'include/{{name}}_log.hrl',
 								 'src/{{name}}_app.erl', 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl',
