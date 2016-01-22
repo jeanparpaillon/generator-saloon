@@ -1,6 +1,7 @@
 'use strict';
 
 var generators = require('yeoman-generator');
+var path = require('path');
 var mustache = require('mustache');
 
 var Saloon = generators.Base.extend({
@@ -24,7 +25,7 @@ module.exports = Saloon.extend({
   constructor: function() {
 		generators.Base.apply(this, arguments);
 
-		//this.sourceRoot(this.path.join(__dirname, '../templates'));
+		this.sourceRoot(path.join(__dirname, '../templates'));
 	},
 
   initializing: function () {
