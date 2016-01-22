@@ -36,7 +36,7 @@ $ mkdir $HOME/myapp
 4. Call yeoman to create your app:
 ```sh
 $ cd $HOME/myapp && yo saloon
-``
+```
 5. You can now build your app and start it:
 ```sh
 $ make && ./start.sh
