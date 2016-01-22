@@ -47,7 +47,7 @@ module.exports = Saloon.extend({
 
 		var files = ['README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
 								 'include/{{name}}_log.hrl',
-								 'src/{{name}}_app.erl', 'src/{{name}}.app.src', 'src/{{name}}.erl',
+								 'src/{{name}}_app.erl', 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl',
 								 'priv/www/bower.json', 'priv/www/index.html', 'priv/www/favicon.ico',
 								 'priv/www/robots.txt', 'priv/www/styles/main.scss', 'priv/www/images/yeoman.png',
@@ -59,6 +59,7 @@ module.exports = Saloon.extend({
   },
 
 	install: function () {
+		this.spawnCommand('chmod', ['a+x', this.destinationPath('start.sh')]);
 		this.spawnCommand('make', ['-f', 'erlang.mk', 'erlang.mk']);
 	}
 
