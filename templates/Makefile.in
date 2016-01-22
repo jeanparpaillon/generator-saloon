@@ -20,12 +20,14 @@ bindir ?= $(prefix)/bin
 
 subst = sed -e 's|@VSN[@]|$(VSN)|g'
 
+FRONTEND = priv/www
+
 include erlang.mk
 
 app:: frontend
 
 frontend:
-
+	cd $(FRONTEND) && bower update
 
 ebin/$(PROJECT).app:: src/$(PROJECT).app.src
 
