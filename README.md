@@ -1,6 +1,8 @@
 generator-saloon
 ================
 
+[![Build Status](https://travis-ci.org/jeanparpaillon/generator-saloon.svg?branch=master)](https://travis-ci.org/jeanparpaillon/generator-saloon)
+
 Yeoman + Cowboy = Saloon !
 
 Saloon is a yeoman generator for building cowboy-based web app.
