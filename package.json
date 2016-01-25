@@ -24,7 +24,6 @@
   ],
   "dependencies": {
 		"yeoman-generator": ">=0.18.0",
-		"generator-angular": ">=0.15.1",
 		"mustache": ">=2.2.1",
 		"spawn-sync": "^1.0.15"
   },
