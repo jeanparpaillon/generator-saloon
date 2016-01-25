@@ -63,8 +63,8 @@ module.exports = Saloon.extend({
 	install: function () {
 		cmd('chmod', ['a+x', this.destinationPath('start.sh')]);
 		cmd('make', ['-f', 'erlang.mk', 'erlang.mk']);
-		this.log("###"
-						 + "### You app is ready. You can build it with 'make'"
+		this.log("###\n"
+						 + "### You app is ready. You can build it with 'make'\n"
 						 + "###");
 	}
 
