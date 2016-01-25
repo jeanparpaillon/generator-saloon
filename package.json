@@ -1,6 +1,6 @@
 {
   "name": "generator-saloon",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Yeoman generator for erlang/cowboy based webapp",
 	"repository": {
 		"type": "git",
@@ -16,7 +16,8 @@
   "author": "Jean Parpaillon",
   "main": "app/index.js",
   "files": [
-		"app"
+		"app",
+		"templates"
   ],
   "dependencies": {
 		"yeoman-generator": ">=0.18.0",
