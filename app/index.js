@@ -60,9 +60,9 @@ module.exports = Saloon.extend({
 								 'include/{{name}}_log.hrl',
 								 'src/{{name}}_app.erl', 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl',
-								 'priv/bower.json',
+								 'priv/bower.json', 'priv/styles/main.scss',
 								 'priv/www/index.html', 'priv/www/favicon.ico',
-								 'priv/www/robots.txt', 'priv/www/styles/main.scss', 'priv/www/images/yeoman.png',
+								 'priv/www/robots.txt', 'priv/www/images/yeoman.png',
 								 'priv/www/views/main.html', 'priv/www/views/view.html'];
 		var i = 0;
 		for (i = 0; i < files.length; i++) {
@@ -72,7 +72,7 @@ module.exports = Saloon.extend({
 		// Grunt
 		var gruntfile = new grunt();
 		gruntfile.insertConfig("sass",
-													 "{ dist: { files: { 'styles/main.css': 'styles/main.scss' } } }");
+													 "{ dist: { files: { 'www/styles/main.css': 'styles/main.scss' } } }");
 		gruntfile.insertConfig("watch",
 													 "{ source: " + 
 													 "  {" +
@@ -82,7 +82,7 @@ module.exports = Saloon.extend({
 													 "  }" +
 													 "}");
 		gruntfile.registerTask('default', ['sass']);
-		this.fs.write(this.destinationPath('priv/www/Gruntfile.js'), gruntfile.toString());
+		this.fs.write(this.destinationPath('priv/Gruntfile.js'), gruntfile.toString());
   },
 
 	install: function () {
