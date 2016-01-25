@@ -1,0 +1,10 @@
+{
+	"name": "{{name}}",
+	"version": "0.0.0",
+	"description": "<MY DESCRIPTION HERE>",
+	"dependencies": {
+		"grunt": "*",
+		"grunt-contrib-watch": "*",
+		"grunt-sass": "*"
+	}
+}

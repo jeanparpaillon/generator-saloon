@@ -60,7 +60,8 @@ module.exports = Saloon.extend({
 								 'include/{{name}}_log.hrl',
 								 'src/{{name}}_app.erl', 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl',
-								 'priv/bower.json', 'priv/styles/main.scss',
+								 'priv/package.json', 'priv/.bowerrc', 'priv/bower.json',
+								 'priv/styles/main.scss',
 								 'priv/www/index.html', 'priv/www/favicon.ico',
 								 'priv/www/robots.txt', 'priv/www/images/yeoman.png',
 								 'priv/www/views/main.html', 'priv/www/views/view.html'];
@@ -68,7 +69,7 @@ module.exports = Saloon.extend({
 		for (i = 0; i < files.length; i++) {
 	    this.copy_or_render(files[i], this.ctx());
 		};
-
+		
 		// Grunt
 		var gruntfile = new grunt();
 		gruntfile.insertConfig("sass",
@@ -81,8 +82,10 @@ module.exports = Saloon.extend({
 													 "    options: { livereload: true }" +
 													 "  }" +
 													 "}");
+		gruntfile.loadNpmTasks(['grunt-sass', 'grunt-contrib-watch']);
 		gruntfile.registerTask('default', ['sass']);
 		this.fs.write(this.destinationPath('priv/Gruntfile.js'), gruntfile.toString());
+
   },
 
 	install: function () {

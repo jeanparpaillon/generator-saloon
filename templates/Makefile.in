@@ -20,14 +20,28 @@ bindir ?= $(prefix)/bin
 
 subst = sed -e 's|@VSN[@]|$(VSN)|g'
 
-FRONTEND = priv/www
+FRONTEND = priv
+STAMP_NPM = $(FRONTEND)/.stamp-npm
+STAMP_BOWER = $(FRONTEND)/.stamp-bower
 
 include erlang.mk
 
 app:: frontend
 
-frontend:
-	cd $(FRONTEND) && bower update
+deps:: deps-npm deps-bower
+
+deps-npm: $(STAMP_NPM)
+
+$(STAMP_NPM): $(FRONTEND)/package.json
+	cd $(<D) && npm update
+	touch $@
+
+$(STAMP_BOWER): $(FRONTEND)/bower.json
+	cd $(<D) && bower update
+	touch $@
+
+frontend: $(FRONTEND)/Gruntfile.js
+	cd $(<D) && grunt
 
 ebin/$(PROJECT).app:: src/$(PROJECT).app.src
 
@@ -59,4 +73,4 @@ clean-deps:
 		fi ; \
 	done
 
-.PHONY: app clean-deps
+.PHONY: app deps-npm deps-bower frontend clean-deps
