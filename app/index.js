@@ -4,6 +4,9 @@ var generators = require('yeoman-generator');
 var path = require('path');
 var mustache = require('mustache');
 var cmd = require('spawn-sync');
+var chalk = require('chalk');
+var fws = require('fixed-width-string');
+var grunt = require('gruntfile-editor');
 
 var Saloon = generators.Base.extend({
   render: function (tmplFile, dest, ctx) {
@@ -18,6 +21,24 @@ var Saloon = generators.Base.extend({
 		} else {
 			this.fs.copy(this.templatePath(name), this.destinationPath(dest));
 		}
+	},
+
+	ctx: function () {
+		return {
+	    name: this.appname,
+	    description: this.description,
+			versions: {
+				ng: "1.4.0",
+				boostrapsass: "3.2.0"
+			},
+			ngVer: "1.4.0",
+	    curlyOpen: '{{',
+	    curlyEnd: '}}'
+		};
+	},
+
+	log2: function (cmd, target) {
+		this.log(fws(chalk.green(cmd), 9, {align: 'right'}) + ' ' + target);		
 	}
 });
 
@@ -34,18 +55,6 @@ module.exports = Saloon.extend({
   },
 
   writing: function () {
-		var ctx = {
-	    name: this.appname,
-	    description: this.description,
-			versions: {
-				ng: "1.4.0",
-				boostrapsass: "3.2.0"
-			},
-			ngVer: "1.4.0",
-	    curlyOpen: '{{',
-	    curlyEnd: '}}'
-		};
-
 		var files = ['.yo-rc.json', '.gitignore',
 								 'README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
 								 'include/{{name}}_log.hrl',
@@ -56,16 +65,33 @@ module.exports = Saloon.extend({
 								 'priv/www/views/main.html', 'priv/www/views/view.html'];
 		var i = 0;
 		for (i = 0; i < files.length; i++) {
-	    this.copy_or_render(files[i], ctx);
-		}
+	    this.copy_or_render(files[i], this.ctx());
+		};
+
+		// Grunt
+		var gruntfile = new grunt();
+		gruntfile.insertConfig("sass",
+													 "{ dist: { files: { 'styles/main.css': 'styles/main.scss' } } }");
+		gruntfile.insertConfig("watch",
+													 "{ source: " + 
+													 "  {" +
+													 "    files:  ['styles/main.scss']," +
+													 "    tasks:  ['sass']," +
+													 "    options: { livereload: true }" +
+													 "  }" +
+													 "}");
+		gruntfile.registerTask('default', ['sass']);
+		this.fs.write(this.destinationPath('priv/www/Gruntfile.js'), gruntfile.toString());
   },
 
 	install: function () {
+		this.log2('chmod', 'start.sh');
 		cmd('chmod', ['a+x', this.destinationPath('start.sh')]);
-		cmd('make', ['-f', 'erlang.mk', 'erlang.mk']);
-		this.log("###\n"
-						 + "### You app is ready. You can build it with 'make'\n"
-						 + "###");
-	}
 
+		this.log2('bootstrap', 'erlang.mk');
+		cmd('make', ['-f', 'erlang.mk', 'erlang.mk']);
+
+		chalk.blue.bold("Saloon ready for gig. Let's dance !");
+		chalk.bold("Now, type 'make' for building.");
+	}
 });

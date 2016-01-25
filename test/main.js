@@ -19,9 +19,14 @@ describe('saloon', function () {
 			'src/' + appname + '_app.erl', 'src/' + appname + '.app.src.in',
 			'src/' + appname + '.erl', 'src/' + appname + '_http.erl',
 			'src/' + appname + '_index.erl', 'src/' + appname + '_sup.erl',
-			'priv/www/bower.json', 'priv/www/index.html', 'priv/www/favicon.ico',
+			'priv/www/bower.json',
+			'priv/www/index.html', 'priv/www/favicon.ico',
 			'priv/www/robots.txt', 'priv/www/styles/main.scss', 'priv/www/images/yeoman.png',
 			'priv/www/views/main.html', 'priv/www/views/view.html'
 		]);
+	});
+
+	it('check Gruntfile.js', function() {
+		assert.file(['priv/www/Gruntfile.js']);
 	});
 });
