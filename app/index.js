@@ -3,6 +3,7 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var mustache = require('mustache');
+var cmd = require('spawn-sync');
 
 var Saloon = generators.Base.extend({
   render: function (tmplFile, dest, ctx) {
@@ -60,8 +61,11 @@ module.exports = Saloon.extend({
   },
 
 	install: function () {
-		this.spawnCommand('chmod', ['a+x', this.destinationPath('start.sh')]);
-		this.spawnCommand('make', ['-f', 'erlang.mk', 'erlang.mk']);
+		cmd('chmod', ['a+x', this.destinationPath('start.sh')]);
+		cmd('make', ['-f', 'erlang.mk', 'erlang.mk']);
+		this.log("###"
+						 + "### You app is ready. You can build it with 'make'"
+						 + "###");
 	}
 
 });
