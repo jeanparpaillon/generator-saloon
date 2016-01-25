@@ -13,7 +13,10 @@
 		"erlang",
 		"cowboy"
   ],
-  "author": "Jean Parpaillon",
+  "author": {
+		"name": "Jean Parpaillon",
+		"email": "jean.parpaillon@free.fr"
+	},
   "main": "app/index.js",
   "files": [
 		"app",
