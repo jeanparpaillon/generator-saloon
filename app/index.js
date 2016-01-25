@@ -60,7 +60,8 @@ module.exports = Saloon.extend({
 								 'include/{{name}}_log.hrl',
 								 'src/{{name}}_app.erl', 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_http.erl', 'src/{{name}}_index.erl', 'src/{{name}}_sup.erl',
-								 'priv/www/bower.json', 'priv/www/index.html', 'priv/www/favicon.ico',
+								 'priv/bower.json',
+								 'priv/www/index.html', 'priv/www/favicon.ico',
 								 'priv/www/robots.txt', 'priv/www/styles/main.scss', 'priv/www/images/yeoman.png',
 								 'priv/www/views/main.html', 'priv/www/views/view.html'];
 		var i = 0;
