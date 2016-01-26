@@ -27,7 +27,8 @@
 		"mustache": ">=2.2.1",
 		"spawn-sync": "^1.0.15",
 		"chalk": "^1.1.1",
-		"fixed-width-string": "^1.0.0"
+		"fixed-width-string": "^1.0.0",
+		"gruntfile-editor": "^1.1.0"
   },
 	"devDependencies": {
 		"yeoman-test": "*",
