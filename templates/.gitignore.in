@@ -11,3 +11,4 @@
 
 $ Frontend
 /priv/www/bower_components
+/priv/node_modules
