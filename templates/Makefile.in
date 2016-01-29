@@ -7,10 +7,10 @@ define localdep =
 $(shell erl -noshell -eval "case application:ensure_all_started($1) of {ok, _} -> halt(0); _ -> halt(1) end." && echo ok || true)
 endef
 
-ALL_DEPS = cowboy jsx
+ALL_DEPS = cowboy_swagger
 $(foreach dep,$(ALL_DEPS),$(if $(call localdep,$(dep)),$(eval LOCAL_DEPS+=$(dep)),$(eval DEPS+=$(dep))))
 
-dep_cowboy_commit = 2.0.0-pre.1
+dep_cowboy_swagger = git https://github.com/jeanparpaillon/cowboy-swagger.git cowboy2
 
 VSN = $(shell $(CURDIR)/version.sh $(VERSION))
 ARCHIVE = $(PROJECT)-$(VSN).tar.xz

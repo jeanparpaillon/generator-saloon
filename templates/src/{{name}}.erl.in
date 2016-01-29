@@ -2,17 +2,50 @@
 
 -include("{{name}}_log.hrl").
 
-%% API
--export([start/0]).
+-export([start/0,
+		 stop/0]).
 
-%%% API
+%% application behaviour
+-export([start/2,
+		 start_phase/3,
+		 stop/1]).
+
+%% @doc Starts the application
 start() ->
-    application:load({{name}}),
-    case application:ensure_all_started({{name}}) of
-	{ok, _} ->
-	    ?info("{{name}} backend started on port: ~b", [application:get_env({{name}}, port, 0)]),
-	    ok;
-	{error, _Err} ->
-	    ?error("{{name}} backend failed to start: ~p", [_Err]),
-	    erlang:halt(1)
-    end.
+    application:ensure_all_started({{name}}).
+
+%% @doc Stops the application
+stop() ->
+    application:stop({{name}}).
+
+%% @private
+start(_StartType, _StartArgs) ->
+    {{name}}_sup:start_link().
+
+%% @private
+stop(_State) ->
+    ok = cowboy:stop_listener({{name}}_http).
+
+-spec start_phase(atom(), application:start_type(), []) -> ok | {error, term()}.
+start_phase(start_http, _StartType, []) ->
+    {ok, Port} = application:get_env({{name}}, port),
+    Trails = trails:trails([{{name}}_echo_handler,
+							{{name}}_desc_handler,
+							cowboy_swagger_handler]),
+    trails:store(Trails),
+    Dispatch = trails:single_host_compile(Trails),
+    RanchOpts = [{port, Port}],
+    ListenerCount = 100,
+    CowboyOpts = 
+		[
+		 {env, [ {dispatch, Dispatch } ]},
+		 {compress, true},
+		 {timeout, 12000}
+		],
+    case cowboy:start_http({{name}}_http, ListenerCount, RanchOpts, CowboyOpts) of
+		{ok, _} ->
+			?info("Application listening on port: ~b", [Port]);
+		{error, _Err} ->
+			?error("Error starting application: ~p", [_Err])
+    end,
+    ok.

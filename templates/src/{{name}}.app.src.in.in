@@ -2,15 +2,20 @@
  [
   {description, "{{description}}"},
   {vsn, "@VSN@"},
+  {applications, 
+   [
+	kernel,
+	stdlib,
+	jiffy,
+	cowboy,
+	trails,
+	cowboy_swagger
+   ]},
   {modules, []},
-  {applications, [
-                  kernel,
-				  inets,
-                  stdlib,
-				  cowboy
-                 ]},
-  {mod, { {{name}}_app, []}},
+  {mod, { {{name}}, []}},
+  {registered, []},
   {env, [
 		 {port, 8080}
-		]}
+		]},
+  {start_phases, [{start_http, []}]}
  ]}.
