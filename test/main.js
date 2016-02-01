@@ -16,9 +16,9 @@ describe('saloon', function () {
 		assert.file([
 			'.yo-rc.json', '.gitignore', 'README.md', 'Makefile', 'start.sh', 'version.sh', '.editorconfig',
 			'erlang.mk', 'include/' + appname + '_log.hrl',
-			'src/' + appname + '_app.erl', 'src/' + appname + '.app.src.in',
-			'src/' + appname + '.erl', 'src/' + appname + '_http.erl',
-			'src/' + appname + '_index.erl', 'src/' + appname + '_sup.erl',
+			'src/' + appname + '.app.src.in',
+			'src/' + appname + '.erl', 'src/' + appname + '_sup.erl',
+			'src/' + appname + '_desc_handler.erl', 'src/' + appname + '_echo_handler.erl', 
 			'priv/package.json', 'priv/bower.json', 'priv/.bowerrc', 'priv/styles/main.scss', 
 			'priv/www/index.html', 'priv/www/favicon.ico',
 			'priv/www/robots.txt', 'priv/www/images/yeoman.png',
