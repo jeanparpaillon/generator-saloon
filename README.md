@@ -8,7 +8,10 @@ Yeoman + Cowboy = Saloon !
 Saloon is a yeoman generator for building cowboy-based web app.
 
 A saloon contains:
-* Backend: erlang/OTP [cowboy](https://github.com/ninenines/cowboy) (version 2)
+* Backend:
+  * erlang/OTP [cowboy](https://github.com/ninenines/cowboy) (version 2)
+  * [cowboy-swagger](https://github.com/jeanparpaillon/cowboy-swagger):
+  integrates cowboy with swagger (patched for cowboy 2)
 * Frontend:
   * [Angular.js](https://angularjs.org/), with some fancy modules:
   route, touch, resource (see `priv/www/bower.json`);
