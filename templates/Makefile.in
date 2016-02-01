@@ -43,9 +43,7 @@ $(STAMP_BOWER): $(FRONTEND)/bower.json
 frontend: $(FRONTEND)/Gruntfile.js
 	cd $(<D) && grunt
 
-ebin/$(PROJECT).app:: src/$(PROJECT).app.src
-
-src/$(PROJECT).app.src: src/$(PROJECT).app.src.in
+src/$(PROJECT).app.src:: src/$(PROJECT).app.src.in
 	$(gen_verbose) $(subst) $< > $@
 
 dist: $(PROJECT)-$(VSN).tar.xz
