@@ -43,6 +43,8 @@ $(STAMP_BOWER): $(FRONTEND)/bower.json
 frontend: $(FRONTEND)/Gruntfile.js
 	cd $(<D) && grunt
 
+$(PROJECT).d:: src/$(PROJECT).app.src
+
 src/$(PROJECT).app.src:: src/$(PROJECT).app.src.in
 	$(gen_verbose) $(subst) $< > $@
 

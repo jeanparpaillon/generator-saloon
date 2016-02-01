@@ -92,8 +92,8 @@ module.exports = Saloon.extend({
 		this.log2('chmod', 'start.sh');
 		cmd('chmod', ['a+x', this.destinationPath('start.sh')]);
 
-		//this.log2('bootstrap', 'erlang.mk');
-		//cmd('make', ['-f', 'erlang.mk', 'erlang.mk']);
+		this.log2('bootstrap', 'erlang.mk');
+		cmd('make', ['-f', 'erlang.mk', 'erlang.mk']);
 
 		chalk.blue.bold("Saloon ready for gig. Let's dance !");
 		chalk.bold("Now, type 'make' for building.");
