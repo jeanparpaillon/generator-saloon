@@ -6,7 +6,6 @@ var mustache = require('mustache');
 var cmd = require('spawn-sync');
 var chalk = require('chalk');
 var fws = require('fixed-width-string');
-var grunt = require('gruntfile-editor');
 
 var Saloon = generators.Base.extend({
   render: function (tmplFile, dest, ctx) {
@@ -57,10 +56,10 @@ module.exports = Saloon.extend({
   writing: function () {
 		var files = ['.yo-rc.json', '.gitignore', '.editorconfig',
 								 'README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
-								 'include/{{name}}_log.hrl',
+								 'priv/Makefile', 'include/{{name}}_log.hrl',
 								 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_echo_handler.erl', 'src/{{name}}_desc_handler.erl', 'src/{{name}}_sup.erl',
-								 'priv/package.json', 'priv/.bowerrc', 'priv/bower.json',
+								 'priv/.bowerrc', 'priv/bower.json',
 								 'priv/styles/main.scss',
 								 'priv/www/index.html', 'priv/www/favicon.ico',
 								 'priv/www/robots.txt', 'priv/www/images/yeoman.png',
@@ -69,24 +68,7 @@ module.exports = Saloon.extend({
 		for (i = 0; i < files.length; i++) {
 	    this.copy_or_render(files[i], this.ctx());
 		};
-		
-		// Grunt
-		var gruntfile = new grunt();
-		gruntfile.insertConfig("sass",
-													 "{ dist: { files: { 'www/styles/main.css': 'styles/main.scss' } } }");
-		gruntfile.insertConfig("watch",
-													 "{ source: " + 
-													 "  {" +
-													 "    files:  ['styles/main.scss']," +
-													 "    tasks:  ['sass']," +
-													 "    options: { livereload: true }" +
-													 "  }" +
-													 "}");
-		gruntfile.loadNpmTasks(['grunt-sass', 'grunt-contrib-watch']);
-		gruntfile.registerTask('default', ['sass']);
-		this.fs.write(this.destinationPath('priv/Gruntfile.js'), gruntfile.toString());
-
-  },
+	},
 
 	install: function () {
 		this.log2('chmod', 'start.sh');

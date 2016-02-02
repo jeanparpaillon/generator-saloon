@@ -20,28 +20,25 @@ bindir ?= $(prefix)/bin
 
 subst = sed -e 's|@VSN[@]|$(VSN)|g'
 
-FRONTEND = priv
-STAMP_NPM = $(FRONTEND)/.stamp-npm
-STAMP_BOWER = $(FRONTEND)/.stamp-bower
+SUBDIRS = priv
+RECURSIVES = all deps clean distclean
+
+define recursive
+$(1)-recursive:
+	for d in $(SUBDIRS); do \
+	  $(MAKE) -C $$$$d $(1); \
+	done
+endef
 
 include erlang.mk
 
-app:: frontend
+$(foreach rule,$(RECURSIVES),$(eval $(call recursive,$(rule))))
 
-deps:: deps-npm deps-bower
+app:: all-recursive
 
-deps-npm: $(STAMP_NPM)
+deps:: deps-recursive
 
-$(STAMP_NPM): $(FRONTEND)/package.json
-	cd $(<D) && npm update
-	touch $@
-
-$(STAMP_BOWER): $(FRONTEND)/bower.json
-	cd $(<D) && bower update
-	touch $@
-
-frontend: $(FRONTEND)/Gruntfile.js
-	cd $(<D) && grunt
+distclean:: distclean-recursive
 
 $(PROJECT).d:: src/$(PROJECT).app.src
 
@@ -62,7 +59,7 @@ $(PROJECT)-$(VSN).tar.xz:
 	  tar cf - $(PROJECT)-$(VSN) | xz > $@ && \
 	  rm -rf $(PROJECT)-$(VSN)
 
-clean:: clean-deps
+clean:: clean-deps clean-recursive
 
 clean-deps:
 	@for dep in $(wildcard deps/*) ; do \
@@ -73,4 +70,4 @@ clean-deps:
 		fi ; \
 	done
 
-.PHONY: app deps-npm deps-bower frontend clean-deps
+.PHONY: app clean-deps $(foreach rule,$(RECURSIVES),$(rule)-recursive)
