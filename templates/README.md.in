@@ -3,6 +3,13 @@
 
 This application heas been generated with yeoman generator saloon.
 
+# Pre-requisites
+
+* erlang/OTP (>= 18.0)
+* GNU make
+* bower
+* sassc (compiler for CSS)
+
 # Quickstart
 
 ```sh
