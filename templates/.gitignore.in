@@ -8,7 +8,8 @@
 /*.d
 /deps
 /src/*.app.src
+/_rel
+/relx
 
 $ Frontend
 /priv/www/bower_components
-/priv/node_modules

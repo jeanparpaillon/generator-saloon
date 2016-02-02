@@ -2,3 +2,18 @@
 ========================================
 
 This application heas been generated with yeoman generator saloon.
+
+# Quickstart
+
+```sh
+$ make
+```
+
+Then
+
+```sh
+$ _rel/{{name}}/bin/{{name}} start
+```
+
+Start your favorite browser and point to
+`http://localhost:8080/api-docs/`

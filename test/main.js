@@ -14,8 +14,9 @@ describe('saloon', function () {
 	it('check installed files', function() {
 		var appname = path.basename(process.cwd());
 		assert.file([
-			'.yo-rc.json', '.gitignore', 'README.md', 'Makefile', 'start.sh', 'version.sh', '.editorconfig',
+			'.yo-rc.json', '.gitignore', 'README.md', 'Makefile', 'version.sh', '.editorconfig',
 			'erlang.mk', 'include/' + appname + '_log.hrl', 'priv/Makefile',
+			'relx.config', 'config/sys.config',
 			'src/' + appname + '.app.src.in',
 			'src/' + appname + '.erl', 'src/' + appname + '_sup.erl',
 			'src/' + appname + '_desc_handler.erl', 'src/' + appname + '_echo_handler.erl', 

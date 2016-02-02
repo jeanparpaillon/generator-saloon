@@ -55,8 +55,9 @@ module.exports = Saloon.extend({
 
   writing: function () {
 		var files = ['.yo-rc.json', '.gitignore', '.editorconfig',
-								 'README.md', 'Makefile', 'start.sh', 'version.sh', 'erlang.mk',
+								 'README.md', 'Makefile', 'version.sh', 'erlang.mk',
 								 'priv/Makefile', 'include/{{name}}_log.hrl',
+								 'relx.config', 'config/sys.config',
 								 'src/{{name}}.app.src.in', 'src/{{name}}.erl',
 								 'src/{{name}}_echo_handler.erl', 'src/{{name}}_desc_handler.erl', 'src/{{name}}_sup.erl',
 								 'priv/.bowerrc', 'priv/bower.json',
