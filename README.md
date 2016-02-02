@@ -46,3 +46,8 @@ $ cd $HOME/myapp && yo saloon
 $ make && ./start.sh
 ```
 6. You app is running and accessible on port 8080.
+
+# TODO
+
+* Generates a nice(r) frontend
+* Integrates a data model ([JHipster](https://jhipster.github.io/jhipster-uml/#jdl) ? [OCCI](https://github.com/erocci/erocci_core/blob/master/priv/schemas/occi-core.xml) ?)
